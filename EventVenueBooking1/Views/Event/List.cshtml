@@ -1,0 +1,38 @@
+﻿@model List<EventVenueBooking1.Models.Entities.Event>
+
+@{
+    ViewData["Title"] = "Event List";
+}
+
+<h1>Event List</h1>
+
+<table class="table table-striped table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Venue Id</th>
+            <th>Event Date</th>
+            <th>Booked</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.Name</td>
+                <td>@ev.VenueId</td>
+                <td>@ev.EventDate.ToString("yyyy-MM-dd")</td>
+                <td>@(ev.Booked ? "Yes" : "No")</td>
+                <td>@ev.Description</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="/Event/Edit/@ev.RowKey">Edit</a>
+                    <form asp-action="Delete" asp-controller="Event" method="post" asp-route-id="@ev.RowKey" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

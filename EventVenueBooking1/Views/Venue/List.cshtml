@@ -1,0 +1,43 @@
+﻿@model List<EventVenueBooking1.Models.Entities.Venue>
+
+<h1>All Venues</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th>Booked</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var venue in Model)
+        {
+            <tr>
+                <td>@venue.Name</td>
+                <td>@venue.Location</td>
+                <td>@venue.Capacity</td>
+                <td>@(venue.Booked ? "Yes" : "No")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(venue.ImageFileName))
+                    {
+                        <img src="@venue.ImageFileName" width="120" alt="Venue Image" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@venue.RowKey" class="btn btn-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@venue.RowKey" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
